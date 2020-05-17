@@ -16,10 +16,9 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
     protected $brandCustomerFacade;
 
     /**
-     * @var \Spryker\Zed\ProductList\Business\ProductListFacadeInterface
+     * @var \FondOfSpryker\Zed\ProductList\Business\ProductListFacadeInterface
      */
     protected $productListFacade;
-
 
     public function __construct(
         BrandCustomerFacadeInterface $brandCustomerFacade,
@@ -55,20 +54,20 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
     }
 
     /**
-     *
      * @return void
      */
-    protected function createCustomerBrandRelations()
+    protected function createCustomerBrandRelations(): void
     {
         $productListCollectionTransfer = $this->productListFacade->getAllProductLists();
+        $productListTransfers = $productListCollectionTransfer->getProductLists();
 
-
-        if ($productListCollectionTransfer === null) {
-            return null;
+        if ($productListTransfers->count() === 0) {
+            return;
         }
 
-        foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
-            if (count($productListTransfer->getBrandRelation()->getIdBrands()) > 0 &&
+        foreach ($productListTransfers as $productListTransfer) {
+            if (
+                count($productListTransfer->getBrandRelation()->getIdBrands()) > 0 &&
                 count($productListTransfer->getProductListCustomerRelation()->getCustomerIds()) > 0
             ) {
                 $this->saveCustomerBrandRelations(
