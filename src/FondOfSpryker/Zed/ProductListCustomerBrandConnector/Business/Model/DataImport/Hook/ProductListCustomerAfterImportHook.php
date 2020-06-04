@@ -20,6 +20,10 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
      */
     protected $productListFacade;
 
+    /**
+     * @param \FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacadeInterface $brandCustomerFacade
+     * @param \FondOfSpryker\Zed\ProductList\Business\ProductListFacadeInterface $productListFacade
+     */
     public function __construct(
         BrandCustomerFacadeInterface $brandCustomerFacade,
         ProductListFacadeInterface $productListFacade
