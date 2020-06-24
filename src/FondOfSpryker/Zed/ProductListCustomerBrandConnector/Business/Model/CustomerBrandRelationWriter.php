@@ -48,16 +48,16 @@ class CustomerBrandRelationWriter implements CustomerBrandRelationWriterInterfac
 
         $productListTransfer = (new ProductListTransfer())
             ->setIdProductList($productListCustomerRelationTransfer->getIdProductList());
-        $productListTransfer = $this->productListBrandConnectorFacade
+        $brandRelationTransfer = $this->productListBrandConnectorFacade
             ->findProductListBrandRelationByIdProductList($productListTransfer);
 
-        if ($productListTransfer->getBrandRelation() === null) {
+        if (count($brandRelationTransfer->getIdBrands()) === 0) {
             return $productListCustomerRelationTransfer;
         }
 
         $this->saveCustomerBrandRelations(
             $productListCustomerRelationTransfer->getCustomerIds(),
-            $productListTransfer->getBrandRelation()->getIdBrands()
+            $brandRelationTransfer->getIdBrands()
         );
 
         return $productListCustomerRelationTransfer;
@@ -74,11 +74,30 @@ class CustomerBrandRelationWriter implements CustomerBrandRelationWriterInterfac
         array $brandIds
     ): void {
         foreach ($customerIds as $idCustomer) {
+            $brandIds = array_unique(array_merge($brandIds, $this->findCurrentCustomerBrandIds($idCustomer)));
             $this->brandCustomerFacade->saveCustomerBrandRelation(
                 (new CustomerBrandRelationTransfer())
                     ->setIdCustomer($idCustomer)
                     ->setIdBrands($brandIds)
             );
         }
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return int[]
+     */
+    protected function findCurrentCustomerBrandIds(int $idCustomer): array
+    {
+        $customerBrandRelationTransfer = (new CustomerBrandRelationTransfer())->setIdCustomer($idCustomer);
+        $currentCustomerBrandRelationTransfer =
+            $this->brandCustomerFacade->findCustomerBrandRelationByIdCustomer($customerBrandRelationTransfer);
+
+        if (count($currentCustomerBrandRelationTransfer->getIdBrands()) === 0) {
+            return [];
+        }
+
+        return $currentCustomerBrandRelationTransfer->getIdBrands();
     }
 }

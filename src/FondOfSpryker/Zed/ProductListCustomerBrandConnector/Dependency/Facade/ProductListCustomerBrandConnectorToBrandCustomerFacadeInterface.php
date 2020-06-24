@@ -8,8 +8,19 @@ interface ProductListCustomerBrandConnectorToBrandCustomerFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerBrandRelationTransfer $customerBrandRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerBrandRelationTransfer
      */
     public function saveCustomerBrandRelation(
         CustomerBrandRelationTransfer $customerBrandRelationTransfer
-    ): void;
+    ): CustomerBrandRelationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerBrandRelationTransfer $customerBrandRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerBrandRelationTransfer
+     */
+    public function findCustomerBrandRelationByIdCustomer(
+        CustomerBrandRelationTransfer $customerBrandRelationTransfer
+    ): CustomerBrandRelationTransfer;
 }
