@@ -23,11 +23,22 @@ class ProductListCustomerBrandConnectorToBrandCustomerFacadeBridge implements Pr
     /**
      * @param \Generated\Shared\Transfer\CustomerBrandRelationTransfer $customerBrandRelationTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerBrandRelationTransfer
      */
     public function saveCustomerBrandRelation(
         CustomerBrandRelationTransfer $customerBrandRelationTransfer
-    ): void {
-        $this->brandCustomerFacade->saveCustomerBrandRelation($customerBrandRelationTransfer);
+    ): CustomerBrandRelationTransfer {
+        return $this->brandCustomerFacade->saveCustomerBrandRelation($customerBrandRelationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerBrandRelationTransfer $customerBrandRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerBrandRelationTransfer
+     */
+    public function findCustomerBrandRelationByIdCustomer(
+        CustomerBrandRelationTransfer $customerBrandRelationTransfer
+    ): CustomerBrandRelationTransfer {
+        return $this->brandCustomerFacade->findCustomerBrandRelationByIdCustomer($customerBrandRelationTransfer);
     }
 }
