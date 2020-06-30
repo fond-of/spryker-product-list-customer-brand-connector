@@ -74,11 +74,11 @@ class CustomerBrandRelationWriter implements CustomerBrandRelationWriterInterfac
         array $brandIds
     ): void {
         foreach ($customerIds as $idCustomer) {
-            $brandIds = array_unique(array_merge($brandIds, $this->findCurrentCustomerBrandIds($idCustomer)));
+            $saveBrandIds = array_unique(array_merge($brandIds, $this->findCurrentCustomerBrandIds($idCustomer)));
             $this->brandCustomerFacade->saveCustomerBrandRelation(
                 (new CustomerBrandRelationTransfer())
                     ->setIdCustomer($idCustomer)
-                    ->setIdBrands($brandIds)
+                    ->setIdBrands($saveBrandIds)
             );
         }
     }
