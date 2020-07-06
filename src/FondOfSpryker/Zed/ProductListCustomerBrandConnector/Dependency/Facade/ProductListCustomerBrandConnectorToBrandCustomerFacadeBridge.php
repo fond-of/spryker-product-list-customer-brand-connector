@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\ProductListCustomerBrandConnector\Dependency\Facade;
 
-use FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacade;
+use FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacadeInterface;
 use Generated\Shared\Transfer\CustomerBrandRelationTransfer;
 
 class ProductListCustomerBrandConnectorToBrandCustomerFacadeBridge implements ProductListCustomerBrandConnectorToBrandCustomerFacadeInterface
@@ -13,9 +13,9 @@ class ProductListCustomerBrandConnectorToBrandCustomerFacadeBridge implements Pr
     protected $brandCustomerFacade;
 
     /**
-     * @param \FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacade $brandCustomerFacade
+     * @param \FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacadeInterface $brandCustomerFacade
      */
-    public function __construct(BrandCustomerFacade $brandCustomerFacade)
+    public function __construct(BrandCustomerFacadeInterface $brandCustomerFacade)
     {
         $this->brandCustomerFacade = $brandCustomerFacade;
     }
