@@ -10,7 +10,9 @@
   ],
   "require": {
     "php": ">=7.1",
-    "fond-of-spryker/product-list-customer": "dev-spryker_upgrade"
+    "fond-of-spryker/product-list-customer": "dev-spryker_upgrade",
+    "fond-of-spryker/product-list-customer-extension": "dev-master",
+    "fond-of-spryker/product-list-brand-connector": "dev-spryker_upgrade"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.12",
@@ -29,7 +31,7 @@
   "autoload-dev": {
     "psr-4": {
       "FondOfSpryker\\": "tests/FondOfSpryker/",
-      "Generated\\": "tests/Generated/"
+      "Generated\\": "src/Generated/"
     }
   }
 }
