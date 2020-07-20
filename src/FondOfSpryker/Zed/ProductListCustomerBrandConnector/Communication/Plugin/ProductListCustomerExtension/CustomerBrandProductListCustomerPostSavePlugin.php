@@ -19,7 +19,6 @@ class CustomerBrandProductListCustomerPostSavePlugin extends AbstractPlugin impl
     public function postSave(
         ProductListCustomerRelationTransfer $productListCustomerRelationTransfer
     ): ProductListCustomerRelationTransfer {
-
         return $this
             ->getFacade()
             ->saveCustomerBrandRelationByIdProductListAndCustomerIds($productListCustomerRelationTransfer);

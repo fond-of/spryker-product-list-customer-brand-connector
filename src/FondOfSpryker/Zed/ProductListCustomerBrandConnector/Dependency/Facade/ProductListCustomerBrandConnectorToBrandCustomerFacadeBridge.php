@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\CustomerBrandRelationTransfer;
 class ProductListCustomerBrandConnectorToBrandCustomerFacadeBridge implements ProductListCustomerBrandConnectorToBrandCustomerFacadeInterface
 {
     /**
-     * @var \FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacade
+     * @var \FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacadeInterface
      */
     protected $brandCustomerFacade;
 

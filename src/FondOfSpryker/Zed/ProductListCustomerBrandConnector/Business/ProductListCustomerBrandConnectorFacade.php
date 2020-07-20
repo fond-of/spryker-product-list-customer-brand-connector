@@ -16,6 +16,7 @@ class ProductListCustomerBrandConnectorFacade extends AbstractFacade implements 
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductListCustomerRelationTransfer $productListCustomerRelationTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductListCustomerRelationTransfer
      */
     public function saveCustomerBrandRelationByIdProductListAndCustomerIds(

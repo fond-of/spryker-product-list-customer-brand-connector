@@ -40,9 +40,10 @@ class CustomerBrandRelationWriter implements CustomerBrandRelationWriterInterfac
     public function saveCustomerBrandRelationByIdProductListAndCustomerIds(
         ProductListCustomerRelationTransfer $productListCustomerRelationTransfer
     ): ProductListCustomerRelationTransfer {
-
-        if (count($productListCustomerRelationTransfer->getCustomerIds()) === 0
-            || $productListCustomerRelationTransfer->getIdProductList() === null) {
+        if (
+            count($productListCustomerRelationTransfer->getCustomerIds()) === 0
+            || $productListCustomerRelationTransfer->getIdProductList() === null
+        ) {
             return $productListCustomerRelationTransfer;
         }
 
