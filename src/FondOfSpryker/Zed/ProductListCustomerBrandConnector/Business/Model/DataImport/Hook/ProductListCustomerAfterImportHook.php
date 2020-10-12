@@ -64,7 +64,7 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
         $productListCollectionTransfer = $this->productListFacade->getAllProductLists();
 
         if ($productListCollectionTransfer === null) {
-            return null;
+            return;
         }
         $customerBrandRelations = [];
         foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
@@ -78,7 +78,7 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
         }
 
         if (count($customerBrandRelations) === 0) {
-            return null;
+            return;
         }
 
         $this->saveCustomerBrandRelations($customerBrandRelations);
