@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\ProductListCustomerBrandConnector\Business\Model\Dat
 use FondOfSpryker\Zed\BrandCustomer\Business\BrandCustomerFacadeInterface;
 use FondOfSpryker\Zed\ProductList\Business\ProductListFacadeInterface;
 use Generated\Shared\Transfer\CustomerBrandRelationTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\BrandCustomer\Persistence\FosBrandCustomerQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 
@@ -62,32 +63,59 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
     {
         $productListCollectionTransfer = $this->productListFacade->getAllProductLists();
 
-
         if ($productListCollectionTransfer === null) {
-            return null;
+            return;
         }
-
+        $customerBrandRelations = [];
         foreach ($productListCollectionTransfer->getProductLists() as $productListTransfer) {
+
             if (count($productListTransfer->getBrandRelation()->getIdBrands()) > 0 &&
                 count($productListTransfer->getProductListCustomerRelation()->getCustomerIds()) > 0
             ) {
-                $this->saveCustomerBrandRelations(
-                    $productListTransfer->getProductListCustomerRelation()->getCustomerIds(),
-                    $productListTransfer->getBrandRelation()->getIdBrands()
-                );
+                $customerBrandRelations = $this
+                    ->buildCustomerBrandRelationsForProductListTransfer($productListTransfer, $customerBrandRelations);
             }
         }
+
+        if (count($customerBrandRelations) === 0) {
+            return;
+        }
+
+        $this->saveCustomerBrandRelations($customerBrandRelations);
     }
 
     /**
-     * @param array $customerIds
-     * @param array $brandIds
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param array $customerBrandRelations
      *
-     * @return void
+     * @return array
      */
-    protected function saveCustomerBrandRelations(array $customerIds, array $brandIds): void
+    protected function buildCustomerBrandRelationsForProductListTransfer(
+        ProductListTransfer $productListTransfer,
+        array $customerBrandRelations
+    ): array {
+        foreach ($productListTransfer->getProductListCustomerRelation()->getCustomerIds() as $customerId) {
+
+            if (array_key_exists($customerId, $customerBrandRelations) === false) {
+                $customerBrandRelations[$customerId] = $productListTransfer->getBrandRelation()->getIdBrands();
+                continue;
+            }
+
+            $customerBrandRelations[$customerId] = array_unique(array_merge(
+                $customerBrandRelations[$customerId],
+                $productListTransfer->getBrandRelation()->getIdBrands()
+            ));
+        }
+
+        return $customerBrandRelations;
+    }
+
+    /**
+     * @param array $customerBrandRelations
+     */
+    protected function saveCustomerBrandRelations(array $customerBrandRelations): void
     {
-        foreach ($customerIds as $idCustomer) {
+        foreach ($customerBrandRelations as $idCustomer => $brandIds) {
             $this->brandCustomerFacade->saveCustomerBrandRelation(
                 (new CustomerBrandRelationTransfer())->setIdCustomer($idCustomer)->setIdBrands($brandIds)
             );
