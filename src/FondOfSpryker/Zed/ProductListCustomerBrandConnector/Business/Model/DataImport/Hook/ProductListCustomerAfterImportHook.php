@@ -86,6 +86,8 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param array $customerBrandRelations
+     * 
      * @return array
      */
     protected function buildCustomeBrandRelationsForProductListTransfer(
