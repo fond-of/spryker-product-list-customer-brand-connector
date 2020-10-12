@@ -73,7 +73,7 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
                 count($productListTransfer->getProductListCustomerRelation()->getCustomerIds()) > 0
             ) {
                 $customerBrandRelations = $this
-                    ->buildCustomeBrandRelationsForProductListTransfer($productListTransfer, $customerBrandRelations);
+                    ->buildCustomerBrandRelationsForProductListTransfer($productListTransfer, $customerBrandRelations);
             }
         }
 
@@ -87,10 +87,10 @@ class ProductListCustomerAfterImportHook implements DataImporterAfterImportInter
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      * @param array $customerBrandRelations
-     * 
+     *
      * @return array
      */
-    protected function buildCustomeBrandRelationsForProductListTransfer(
+    protected function buildCustomerBrandRelationsForProductListTransfer(
         ProductListTransfer $productListTransfer,
         array $customerBrandRelations
     ): array {
